@@ -1,20 +1,61 @@
-﻿string word;
-do
+﻿using System;
+
+class Program
 {
-    Console.WriteLine("Введите слово из четного количества букв");
-    word = Console.ReadLine();
-    if (word.Length % 2 != 0)
+    static void Main()
     {
-        Console.WriteLine("Слово должно быть с четным количеством букв!");
+        Menu menu = new Menu();
+        menu.Start();
     }
-} while (word.Length%2!=0);
-char[] array= word.ToCharArray();
-char current;
-for(int i=0; i<array.Length; i = i + 2)
-{
-    current = array[i];
-    array[i] = array[i+1];
-    array[i+1] = current;
 }
-string result=new string(array);
-Console.WriteLine(result);
+
+public class WordProcessor
+{
+    // Метод для проверки, является ли длина строки четной
+    public bool IsEvenLength(string word)
+    {
+        return word.Length % 2 == 0;
+    }
+
+    // Метод для перестановки символов попарно
+    public string SwapCharacters(string word)
+    {
+        char[] array = word.ToCharArray();
+        char current;
+
+        for (int i = 0; i < array.Length; i += 2)
+        {
+            current = array[i];
+            array[i] = array[i + 1];
+            array[i + 1] = current;
+        }
+
+        return new string(array);
+    }
+}
+
+public class Menu
+{
+    private WordProcessor _wordProcessor = new WordProcessor();
+
+    public void Start()
+    {
+        string word;
+
+        // Запрашиваем ввод слова от пользователя, пока не получим четное слово
+        do
+        {
+            Console.WriteLine("Введите слово из четного количества букв:");
+            word = Console.ReadLine();
+
+            if (!_wordProcessor.IsEvenLength(word))
+            {
+                Console.WriteLine("Слово должно быть с четным количеством букв!");
+            }
+        } while (!_wordProcessor.IsEvenLength(word));
+
+        // Переставляем буквы в слове попарно
+        string result = _wordProcessor.SwapCharacters(word);
+        Console.WriteLine("Результат: " + result);
+    }
+}

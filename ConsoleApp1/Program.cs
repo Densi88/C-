@@ -1,52 +1,85 @@
-﻿void exercise1()
+﻿using System;
+
+class Program
 {
-    string kopeykiWord = "";
-    string rublesWord = " ";
-    Console.WriteLine("Input a count of kopeyki");
-    var numberOfKopeyki = int.Parse(Console.ReadLine());
-    if (numberOfKopeyki < 0 || numberOfKopeyki > 9999)
+    static void Main()
     {
-        Console.WriteLine("Некоректный ввод");
+        Menu menu = new Menu();
+        menu.Start();
     }
-    else
+}
+
+public class CurrencyProcessor
+{
+    // Метод для вычисления формы слова для "копейки"
+    public string GetKopeykiWord(int numberOfKopeyki)
     {
-        int integerRubles = numberOfKopeyki / 100;
-        numberOfKopeyki = numberOfKopeyki % 100;
-        if (numberOfKopeyki%10==1)
+        string kopeykiWord = "копеек";
+
+        if (numberOfKopeyki % 10 == 1 && (numberOfKopeyki < 11 || numberOfKopeyki > 20))
         {
             kopeykiWord = "копейка";
         }
-        if(numberOfKopeyki%10>=2 && numberOfKopeyki % 10 <= 4)
+        else if (numberOfKopeyki % 10 >= 2 && numberOfKopeyki % 10 <= 4 && (numberOfKopeyki < 10 || numberOfKopeyki > 20))
         {
             kopeykiWord = "копейки";
         }
-        if (numberOfKopeyki%10>=5 && numberOfKopeyki%10<=9 || numberOfKopeyki%10==0)
-        {
-            kopeykiWord = "копеек";
-        }
-        if (numberOfKopeyki>=11&& numberOfKopeyki<=20)
-        {
-            kopeykiWord = "копеек";
-        }
 
+        return kopeykiWord;
+    }
 
-        if (integerRubles % 10 == 1)
+    // Метод для вычисления формы слова для "рублей"
+    public string GetRublesWord(int integerRubles)
+    {
+        string rublesWord = "рублей";
+
+        if (integerRubles % 10 == 1 && (integerRubles < 11 || integerRubles > 20))
         {
             rublesWord = "рубль";
         }
-        if (integerRubles % 10 >= 2 && integerRubles % 10 <= 4)
+        else if (integerRubles % 10 >= 2 && integerRubles % 10 <= 4 && (integerRubles < 10 || integerRubles > 20))
         {
             rublesWord = "рубля";
         }
-        if (integerRubles % 10 >= 5 && integerRubles % 10 <= 9 || integerRubles % 10 == 0)
+
+        return rublesWord;
+    }
+
+    // Метод для разделения числа на рубли и копейки
+    public void ProcessCurrency(int numberOfKopeyki)
+    {
+        if (numberOfKopeyki < 0 || numberOfKopeyki > 9999)
         {
-            rublesWord = "рублей";
+            Console.WriteLine("Некоректный ввод");
+            return;
         }
-        if (integerRubles >= 11 && integerRubles <= 20)
-        {
-            rublesWord = "рублей";
-        }
-        Console.WriteLine(integerRubles + " " + rublesWord + " " + numberOfKopeyki + " " + kopeykiWord);
+
+        int integerRubles = numberOfKopeyki / 100;
+        numberOfKopeyki = numberOfKopeyki % 100;
+
+        string kopeykiWord = GetKopeykiWord(numberOfKopeyki);
+        string rublesWord = GetRublesWord(integerRubles);
+
+        Console.WriteLine($"{integerRubles} {rublesWord} {numberOfKopeyki} {kopeykiWord}");
     }
 }
-exercise1();
+
+public class Menu
+{
+    private CurrencyProcessor _currencyProcessor = new CurrencyProcessor();
+
+    public void Start()
+    {
+        Console.WriteLine("Input a count of kopeyki:");
+        int numberOfKopeyki;
+
+        if (int.TryParse(Console.ReadLine(), out numberOfKopeyki))
+        {
+            _currencyProcessor.ProcessCurrency(numberOfKopeyki);
+        }
+        else
+        {
+            Console.WriteLine("Некоректный ввод");
+        }
+    }
+}
