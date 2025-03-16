@@ -4,15 +4,15 @@ class Program
 {
     static void Main()
     {
-        Menu menu = new Menu();
-        menu.Start();
+       
+        Menu.Start();
     }
 }
 
-public class CurrencyProcessor
+public static class  CurrencyProcessor
 {
     // Метод для вычисления формы слова для "копейки"
-    public string GetKopeykiWord(int numberOfKopeyki)
+    public static string GetKopeykiWord(int numberOfKopeyki)
     {
         string kopeykiWord = "копеек";
 
@@ -29,7 +29,7 @@ public class CurrencyProcessor
     }
 
     // Метод для вычисления формы слова для "рублей"
-    public string GetRublesWord(int integerRubles)
+    public static string GetRublesWord(int integerRubles)
     {
         string rublesWord = "рублей";
 
@@ -46,12 +46,13 @@ public class CurrencyProcessor
     }
 
     // Метод для разделения числа на рубли и копейки
-    public void ProcessCurrency(int numberOfKopeyki)
+    public static string ProcessCurrency(int numberOfKopeyki)
     {
         if (numberOfKopeyki < 0 || numberOfKopeyki > 9999)
         {
             Console.WriteLine("Некоректный ввод");
-            return;
+            string message = "Некоректный ввод";
+            return message;
         }
 
         int integerRubles = numberOfKopeyki / 100;
@@ -61,21 +62,22 @@ public class CurrencyProcessor
         string rublesWord = GetRublesWord(integerRubles);
 
         Console.WriteLine($"{integerRubles} {rublesWord} {numberOfKopeyki} {kopeykiWord}");
+        string result = $"{integerRubles} {rublesWord} {numberOfKopeyki} {kopeykiWord}";
+        return result;
     }
 }
 
-public class Menu
+public static class Menu
 {
-    private CurrencyProcessor _currencyProcessor = new CurrencyProcessor();
-
-    public void Start()
+   
+    public static void Start()
     {
         Console.WriteLine("Input a count of kopeyki:");
         int numberOfKopeyki;
 
         if (int.TryParse(Console.ReadLine(), out numberOfKopeyki))
         {
-            _currencyProcessor.ProcessCurrency(numberOfKopeyki);
+            CurrencyProcessor.ProcessCurrency(numberOfKopeyki);
         }
         else
         {

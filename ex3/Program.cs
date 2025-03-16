@@ -4,21 +4,21 @@ class Program
 {
     static void Main()
     {
-        Menu menu = new Menu();
-        menu.Start();
+        
+        Menu.Start();
     }
 }
 
-public class WordProcessor
+public static class WordProcessor
 {
     // Метод для проверки, является ли длина строки четной
-    public bool IsEvenLength(string word)
+    public static bool IsEvenLength(string word)
     {
         return word.Length % 2 == 0;
     }
 
     // Метод для перестановки символов попарно
-    public string SwapCharacters(string word)
+    public static string SwapCharacters(string word)
     {
         char[] array = word.ToCharArray();
         char current;
@@ -34,11 +34,10 @@ public class WordProcessor
     }
 }
 
-public class Menu
+public static class Menu
 {
-    private WordProcessor _wordProcessor = new WordProcessor();
-
-    public void Start()
+   
+    public static void Start()
     {
         string word;
 
@@ -48,14 +47,14 @@ public class Menu
             Console.WriteLine("Введите слово из четного количества букв:");
             word = Console.ReadLine();
 
-            if (!_wordProcessor.IsEvenLength(word))
+            if (!WordProcessor.IsEvenLength(word))
             {
                 Console.WriteLine("Слово должно быть с четным количеством букв!");
             }
-        } while (!_wordProcessor.IsEvenLength(word));
+        } while (!WordProcessor.IsEvenLength(word));
 
         // Переставляем буквы в слове попарно
-        string result = _wordProcessor.SwapCharacters(word);
+        string result = WordProcessor.SwapCharacters(word);
         Console.WriteLine("Результат: " + result);
     }
 }

@@ -6,36 +6,32 @@ namespace WordProcessorTests
     [TestClass]
     public class WordProcessorTests
     {
-        private WordProcessor _wordProcessor;
-
-        public WordProcessorTests()
+        [TestMethod()]
+        public void LeterSwapTest()
         {
-            _wordProcessor = new WordProcessor();
+            var word = "abcd";
+            var result=WordProcessor.SwapCharacters(word);
+            Assert.AreEqual("badc", result);
         }
-
-        [TestMethod]
-        [DataRow("abcdef", true)]
-        [DataRow("abc", false)]
-        [DataRow("", true)]
-        public void IsEvenLength_ReturnsCorrectResult(string word, bool expected)
+        [TestMethod()]
+        public void NumberSwapTest()
         {
-            // Act
-            bool result = _wordProcessor.IsEvenLength(word);
-
-            // Assert
-            Assert.AreEqual(expected, result);
+            var word = "123456";
+            var result = WordProcessor.SwapCharacters(word);
+            Assert.AreEqual("214365", result);
         }
-
-        [TestMethod]
-        [DataRow("123456", "214365")]
-        [DataRow("abcd", "badc")]
-        public void SwapCharacters_SwapsCharactersCorrectly(string word, string expected)
+        [TestMethod()]
+        public void CorrectLenghtOfWordTest() {
+            var word = "abcdef";
+            var result = WordProcessor.IsEvenLength(word);
+            Assert.AreEqual(true, result);
+        }
+        [TestMethod()]
+        public void IncorrectLenghtOfWordTest()
         {
-            // Act
-            string result = _wordProcessor.SwapCharacters(word);
-
-            // Assert
-            Assert.AreEqual(expected, result);
+            var word = "abc";
+            var result = WordProcessor.IsEvenLength(word);
+            Assert.AreEqual(false, result);
         }
     }
 }

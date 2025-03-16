@@ -4,14 +4,13 @@ class Program
 {
     static void Main()
     {
-        Menu menu = new Menu();
-        menu.Start();
+        Menu.Start();
     }
 }
 
-public class DepositLogic
+public static class DepositLogic
 {
-    public int CalculateIncrease(double deposit, double firstNumber)
+    public static int CalculateIncrease(double deposit, double firstNumber)
     {
         double increase = 0;
         double currentSumm = deposit;
@@ -28,7 +27,7 @@ public class DepositLogic
         return monthNumber;
     }
 
-    public int CalculateMonthsForTarget(double startDeposit, double targetAmount)
+    public static int CalculateMonthsForTarget(double startDeposit, double targetAmount)
     {
         int monthCount = 0;
 
@@ -42,11 +41,11 @@ public class DepositLogic
     }
 }
 
-public class Menu
+public static class Menu
 {
-    private DepositLogic _logic = new DepositLogic();
+   
 
-    public void Start()
+    public static void Start()
     {
         double deposit, firstNumber, secondNumber;
         int monthNumber = 3;
@@ -71,16 +70,16 @@ public class Menu
         } while (firstNumber < deposit && secondNumber < deposit);
 
         // Расчет, когда прирост станет больше первой суммы
-        monthNumber = _logic.CalculateIncrease(deposit, firstNumber);
+        monthNumber = DepositLogic.CalculateIncrease(deposit, firstNumber);
         DisplayMonth(monthNumber, firstNumber);
 
         // Расчет количества месяцев, чтобы вклад стал больше второй суммы
-        monthCount = _logic.CalculateMonthsForTarget(deposit, secondNumber);
+        monthCount = DepositLogic.CalculateMonthsForTarget(deposit, secondNumber);
         Console.WriteLine("Количество месяцев, за которое вклад станет больше чем " + secondNumber
             + " - " + monthCount);
     }
 
-    private void DisplayMonth(int monthNumber, double firstNumber)
+    public static string DisplayMonth(int monthNumber, double firstNumber)
     {
         string[] months = new string[]
         {
@@ -89,5 +88,7 @@ public class Menu
         };
 
         Console.WriteLine($"Прирост к вкладу стал больше чем {firstNumber} в {months[monthNumber - 1]}");
+        string result = $"Прирост к вкладу стал больше чем {firstNumber} в {months[monthNumber - 1]}";
+        return result;
     }
 }
